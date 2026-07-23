@@ -6,10 +6,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const features = [
-  { no: "01", title: "经典节奏操作", text: "跟随方向指令与节拍判定，重新感受 Perfect 与连续 Combo 的爽快反馈。", image: "/assets/gameplay/street-battle.jpg" },
-  { no: "02", title: "多人同台斗舞", text: "与好友实时登台，比拼节奏、连击和舞台表现，让每一局都充满派对感。", image: "/assets/gameplay/city-stage.jpg" },
-  { no: "03", title: "街舞动作表现", text: "街舞动作、舞步组合与节奏演出共同构成 GrooveParty 独特的舞台语言。", image: "/assets/gameplay/group-stage.jpg" },
-  { no: "04", title: "复古街区舞台", text: "城市街区、俱乐部与巨型音响重新登场，唤醒熟悉的 2000 年代网游记忆。", image: "/assets/gameplay/club-floor.jpg" },
+  { no: "01", title: "经典节奏操作", text: "跟随方向指令与节拍判定，重新感受 Perfect 与连续 Combo 的爽快反馈。", image: "./assets/gameplay/street-battle.jpg" },
+  { no: "02", title: "多人同台斗舞", text: "与好友实时登台，比拼节奏、连击和舞台表现，让每一局都充满派对感。", image: "./assets/gameplay/city-stage.jpg" },
+  { no: "03", title: "街舞动作表现", text: "街舞动作、舞步组合与节奏演出共同构成 GrooveParty 独特的舞台语言。", image: "./assets/gameplay/group-stage.jpg" },
+  { no: "04", title: "复古街区舞台", text: "城市街区、俱乐部与巨型音响重新登场，唤醒熟悉的 2000 年代网游记忆。", image: "./assets/gameplay/club-floor.jpg" },
 ];
 
 const modes = [
@@ -22,21 +22,21 @@ const modes = [
 ];
 
 const fashion = [
-  ["街头酷感", "/assets/fashion/street-cool.jpg", "帽衫、棒球外套与经典街舞轮廓"],
-  ["迷幻潮流", "/assets/fashion/dream-girl.jpg", "闪亮材质与个性配饰自由组合"],
-  ["音乐态度", "/assets/fashion/music-boy.jpg", "用造型表达自己的节奏风格"],
-  ["甜酷活力", "/assets/fashion/sweet-style.jpg", "青春色彩与舞台感兼具"],
+  ["街头酷感", "./assets/fashion/street-cool.jpg", "帽衫、棒球外套与经典街舞轮廓"],
+  ["迷幻潮流", "./assets/fashion/dream-girl.jpg", "闪亮材质与个性配饰自由组合"],
+  ["音乐态度", "./assets/fashion/music-boy.jpg", "用造型表达自己的节奏风格"],
+  ["甜酷活力", "./assets/fashion/sweet-style.jpg", "青春色彩与舞台感兼具"],
 ];
 
 const gallery = [
-  "/assets/gameplay/city-duo.jpg",
-  "/assets/gameplay/combo-stage.jpg",
-  "/assets/gameplay/city-stage.jpg",
-  "/assets/gameplay/group-stage.jpg",
-  "/assets/gameplay/dance-floor.jpg",
-  "/assets/gameplay/night-stage.jpg",
-  "/assets/gameplay/club-floor.jpg",
-  "/assets/gameplay/street-battle.jpg",
+  "./assets/gameplay/city-duo.jpg",
+  "./assets/gameplay/combo-stage.jpg",
+  "./assets/gameplay/city-stage.jpg",
+  "./assets/gameplay/group-stage.jpg",
+  "./assets/gameplay/dance-floor.jpg",
+  "./assets/gameplay/night-stage.jpg",
+  "./assets/gameplay/club-floor.jpg",
+  "./assets/gameplay/street-battle.jpg",
 ];
 
 function Header({ onReserve }: { onReserve: () => void }) {
@@ -62,7 +62,7 @@ function Hero({ onReserve }: { onReserve: () => void }) {
   const reduced = useReducedMotion();
   return (
     <section className="hero" id="top">
-      <img className="hero-bg" src="/assets/hero/grooveparty-poster.png" alt="劲舞世界 Groove Party 主题海报" />
+      <img className="hero-bg" src="./assets/hero/grooveparty-poster.png" alt="劲舞世界 Groove Party 主题海报" />
       <div className="hero-warm-filter" />
       <div className="hero-grid" />
       <div className="hero-content">
@@ -87,7 +87,7 @@ function Hero({ onReserve }: { onReserve: () => void }) {
         transition={{ duration: .88, repeat: Infinity, ease: "easeInOut" }}
         aria-label="鼠标悬浮人物可触发轻微舞步效果"
       >
-        <img src="/assets/hero/hero-stage.jpg" alt="跳舞中的游戏人物" />
+        <img src="./assets/hero/hero-stage.jpg" alt="跳舞中的游戏人物" />
         <AnimatePresence>{hovered && <motion.span className="perfect-pop" initial={{ opacity: 0, scale: .5, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0 }} key="perfect">PERFECT!</motion.span>}</AnimatePresence>
         <span className={hovered ? "dance-ring ring-active" : "dance-ring"} />
       </motion.div>
@@ -109,7 +109,7 @@ function VideoShowcase() {
     <section className="section video-section" id="video">
       <div className="section-heading"><span>FEATURE VIDEO</span><h2>把舞台重新点亮</h2><p>已经内置一段由你提供的游戏截图制作的本地预览视频，可随时替换为正式 PV。</p></div>
       <motion.div className="video-shell" whileHover={{ rotateX: 1.2, rotateY: -1.6, scale: 1.008 }} transition={{ type: "spring", stiffness: 180 }}>
-        <video ref={ref} src="/media/grooveparty-preview-web.mp4" poster="/assets/hero/video-poster.jpg" playsInline controls onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
+        <video ref={ref} src="./media/grooveparty-preview-web.mp4" poster="./assets/hero/video-poster.jpg" playsInline controls onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
         {!playing && <button className="play-button" onClick={toggle} aria-label="播放宣传视频"><span>▶</span><small>PLAY VIDEO</small></button>}
         <div className="video-frame-glow" />
       </motion.div>
@@ -155,12 +155,12 @@ function NewsSection({ onReserve }: { onReserve: () => void }) {
 
 function ReservationModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [contact, setContact] = useState(""); const [message, setMessage] = useState(""); const [busy, setBusy] = useState(false);
-  const submit = async (e: FormEvent) => { e.preventDefault(); setBusy(true); setMessage(""); try { const r = await fetch("/api/reservation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ contact }) }); const data = await r.json(); setMessage(data.message); if (r.ok) setContact(""); } catch { setMessage("提交失败，请稍后重试。"); } finally { setBusy(false); } };
+  const submit = async (e: FormEvent) => { e.preventDefault(); setBusy(true); setMessage(""); await new Promise(resolve => window.setTimeout(resolve, 450)); setMessage("预约信息已接收，正式开放后将与您联系。"); setContact(""); setBusy(false); };
   return <AnimatePresence>{open && <motion.div className="modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={onClose}><motion.div className="reservation-modal" initial={{ y: 30, scale: .94 }} animate={{ y: 0, scale: 1 }} exit={{ y: 20, opacity: 0 }} onMouseDown={e => e.stopPropagation()}><button className="modal-close" onClick={onClose}>×</button><span>RESERVATION</span><h2>预约怀旧服</h2><p>填写邮箱、手机号或其他联系方式。当前接口为演示接口，尚未连接持久化数据库。</p><form onSubmit={submit}><label>联系方式<input value={contact} onChange={e => setContact(e.target.value)} placeholder="example@email.com" required minLength={5} /></label><button className="button button-primary" disabled={busy}>{busy ? "提交中…" : "提交预约"}</button></form>{message && <div className="form-message">{message}</div>}</motion.div></motion.div>}</AnimatePresence>;
 }
 
 function Footer() {
-  return <footer className="footer"><div className="footer-brand"><img src="/assets/branding/groove-party-original.jpg" alt="Groove Party 原版标志" /><div><h2>让我们再次开跳！</h2><p>青春不散场，舞台永不落幕。</p></div></div><div className="footer-links"><a href="#top">返回首页</a><a href="#video">宣传视频</a><a href="#gallery">游戏截图</a><a href="#news">怀旧服情报</a></div><small>本页面为怀旧服概念开发项目。游戏素材版权归相应权利人所有，请在正式运营前完成授权与合规审核。</small></footer>;
+  return <footer className="footer"><div className="footer-brand"><img src="./assets/branding/groove-party-original.jpg" alt="Groove Party 原版标志" /><div><h2>让我们再次开跳！</h2><p>青春不散场，舞台永不落幕。</p></div></div><div className="footer-links"><a href="#top">返回首页</a><a href="#video">宣传视频</a><a href="#gallery">游戏截图</a><a href="#news">怀旧服情报</a></div><small>本页面为怀旧服概念开发项目。游戏素材版权归相应权利人所有，请在正式运营前完成授权与合规审核。</small></footer>;
 }
 
 export default function HomePage() {
