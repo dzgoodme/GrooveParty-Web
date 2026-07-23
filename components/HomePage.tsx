@@ -98,7 +98,7 @@ function Hero({ onReserve }: { onReserve: () => void }) {
   );
 }
 
-function VideoShowcase() {
+function VideoShowcase({ onVideoPlay }: { onVideoPlay: () => void }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const toggle = async () => {
@@ -109,7 +109,7 @@ function VideoShowcase() {
     <section className="section video-section" id="video">
       <div className="section-heading"><span>FEATURE VIDEO</span><h2>把舞台重新点亮</h2><p>已经内置一段由你提供的游戏截图制作的本地预览视频，可随时替换为正式 PV。</p></div>
       <motion.div className="video-shell" whileHover={{ rotateX: 1.2, rotateY: -1.6, scale: 1.008 }} transition={{ type: "spring", stiffness: 180 }}>
-        <video ref={ref} src="./media/grooveparty-preview-web.mp4" poster="./assets/hero/video-poster.jpg" playsInline controls onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
+        <video ref={ref} src="./media/grooveparty-preview-web.mp4" poster="./assets/hero/video-poster.jpg" playsInline controls onPlay={() => { setPlaying(true); onVideoPlay(); }} onPause={() => setPlaying(false)} />
         {!playing && <button className="play-button" onClick={toggle} aria-label="播放宣传视频"><span>▶</span><small>PLAY VIDEO</small></button>}
         <div className="video-frame-glow" />
       </motion.div>
@@ -165,6 +165,15 @@ function Footer() {
 
 export default function HomePage() {
   const [reserveOpen, setReserveOpen] = useState(false);
+  const musicRef = useRef<HTMLAudioElement>(null);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const [musicNeedsGesture, setMusicNeedsGesture] = useState(false);
+  const pauseMusic = () => musicRef.current?.pause();
+  const toggleMusic = async () => {
+    const music = musicRef.current;
+    if (!music) return;
+    if (music.paused) await music.play().catch(() => setMusicPlaying(false)); else music.pause();
+  };
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
@@ -174,5 +183,32 @@ export default function HomePage() {
     });
     return () => ctx.revert();
   }, []);
-  return <><Header onReserve={() => setReserveOpen(true)} /><main><Hero onReserve={() => setReserveOpen(true)} /><VideoShowcase /><FeatureSection /><ModeSection /><FashionSection /><GallerySection /><NewsSection onReserve={() => setReserveOpen(true)} /></main><Footer /><ReservationModal open={reserveOpen} onClose={() => setReserveOpen(false)} /></>;
+  useEffect(() => {
+    const music = musicRef.current;
+    if (!music) return;
+    music.volume = .34;
+    let started = false;
+    const events: (keyof WindowEventMap)[] = ["pointerdown", "touchstart", "keydown"];
+    const cleanup = () => events.forEach(event => window.removeEventListener(event, startMusic, true));
+    const startMusic = () => {
+      if (started || !music.paused) {
+        cleanup();
+        return;
+      }
+      void music.play().then(() => {
+        started = true;
+        setMusicNeedsGesture(false);
+        cleanup();
+      }).catch(() => {
+        setMusicPlaying(false);
+        setMusicNeedsGesture(true);
+      });
+    };
+
+    // Browsers may reject audible autoplay; begin on the visitor's first interaction.
+    events.forEach(event => window.addEventListener(event, startMusic, { capture: true, once: true }));
+    startMusic();
+    return cleanup;
+  }, []);
+  return <><audio ref={musicRef} src="./media/grooveparty-bgm.mp3" loop preload="auto" onPlay={() => { setMusicPlaying(true); setMusicNeedsGesture(false); }} onPause={() => setMusicPlaying(false)} />{musicNeedsGesture && <button className="sound-entry" onClick={() => { const music = musicRef.current; if (music) void music.play().catch(() => setMusicNeedsGesture(true)); }}>ENTER WITH SOUND</button>}<button className={musicPlaying ? "music-toggle is-playing" : "music-toggle"} onClick={toggleMusic} aria-label={musicPlaying ? "暂停背景音乐" : "播放背景音乐"} title={musicPlaying ? "暂停背景音乐" : "播放背景音乐"}>{musicPlaying ? "Ⅱ" : "♪"}</button><Header onReserve={() => setReserveOpen(true)} /><main><Hero onReserve={() => setReserveOpen(true)} /><VideoShowcase onVideoPlay={pauseMusic} /><FeatureSection /><ModeSection /><FashionSection /><GallerySection /><NewsSection onReserve={() => setReserveOpen(true)} /></main><Footer /><ReservationModal open={reserveOpen} onClose={() => setReserveOpen(false)} /></>;
 }

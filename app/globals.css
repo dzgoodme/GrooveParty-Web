@@ -27,6 +27,11 @@ a { color: inherit; text-decoration: none; }
 .nav-links a:hover { opacity: 1; color: var(--yellow); }
 .nav-cta { border: 0; border-radius: 999px; padding: 11px 18px; color: white; background: linear-gradient(135deg, var(--pink), var(--orange)); cursor: pointer; box-shadow: 0 8px 24px rgba(255,68,110,.32); }
 .menu-button { display: none; color: white; border: 0; background: none; font-size: 24px; }
+.music-toggle { position: fixed; z-index: 120; right: 24px; bottom: 24px; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,.65); border-radius: 50%; color: white; background: rgba(33,11,32,.78); backdrop-filter: blur(12px); box-shadow: 0 10px 28px rgba(45,0,31,.25); cursor: pointer; font-size: 22px; line-height: 1; }
+.music-toggle.is-playing { color: var(--yellow); animation: musicSpin 3.2s linear infinite; }
+.sound-entry { position: fixed; z-index: 130; left: 50%; bottom: 28px; transform: translateX(-50%); border: 1px solid rgba(255,255,255,.8); border-radius: 999px; padding: 12px 20px; color: white; background: rgba(33,11,32,.88); box-shadow: 0 10px 28px rgba(45,0,31,.3); cursor: pointer; font-size: 12px; font-weight: 900; letter-spacing: .12em; }
+.sound-entry:hover { color: var(--yellow); border-color: var(--yellow); }
+@keyframes musicSpin { to { transform: rotate(360deg); box-shadow: 0 0 0 6px rgba(255,201,40,.1), 0 10px 28px rgba(45,0,31,.25); } }
 .hero { position: relative; min-height: 940px; height: 100svh; max-height: 1080px; overflow: hidden; color: white; background: #131218; }
 .hero::after { content: ""; position: absolute; z-index: 11; left: -8%; right: -8%; bottom: -72px; height: 142px; border-radius: 50% 50% 0 0 / 58% 58% 0 0; background: var(--surface-tint); box-shadow: 0 -24px 56px rgba(72, 12, 49, .16); pointer-events: none; }
 .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: saturate(1.03) contrast(1.02); }
@@ -143,6 +148,8 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 760px) {
   .site-header { top: 8px; min-height: 58px; border-radius: 17px; }
   .menu-button { display: block; cursor: pointer; }
+  .music-toggle { right: 16px; bottom: 16px; }
+  .sound-entry { bottom: 18px; max-width: calc(100% - 92px); padding: 11px 15px; }
   .nav-links { position: absolute; top: 66px; left: 0; right: 0; padding: 18px; display: none; flex-direction: column; gap: 17px; border-radius: 17px; background: rgba(14,12,17,.95); }
   .nav-open { display: flex; }
   .hero { min-height: 850px; max-height: none; height: 100svh; }
